@@ -10,4 +10,8 @@ public class ConsoleUserInteraction : IUserInteraction
     {
         return Int32.TryParse(inputPlayer, out id);
     }
+    public string GetUserInput()
+    {
+        return Console.ReadLine();
+    }
 }
