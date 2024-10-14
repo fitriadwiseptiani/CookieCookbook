@@ -3,7 +3,6 @@ namespace Cookbook.App.Repository;
 public class RecipeRepository : IRecipeRepository
 {
     private IStringRepoManager _stringRepoManager;
-
     public RecipeRepository(IStringRepoManager stringRepoManager)
     {
         _stringRepoManager = stringRepoManager;

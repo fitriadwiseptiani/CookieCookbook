@@ -32,12 +32,17 @@ public class CookieCookbook : ICookbook
         _ui = ui;
         _cookbookUI = cookbookUI;
     }
+    public void DisplayRecipe()
+    {
+        List<string> recipe = _recipeRepository.ReadRecipes();
+        _cookbookUI.DisplayRecipe(recipe);
+    }
     public CookbookErrorCode MakeNewRecipe()
     {
         while (true)
         {
-            _cookbookUI.ChooseAction(out int action);
-            if (action == 2)
+            UserAction userAction = _cookbookUI.ChooseAction();
+            if (userAction == UserAction.EndSession)
             {
                 if (_ingredient.Count > 0)
                 {
@@ -49,14 +54,14 @@ public class CookieCookbook : ICookbook
                     _ui.WriteMessage("\nSorry there is no ingredient selected, you must choose at least one ingredient");
                 }
             }
-            else if (action == 1)
+            else if (userAction == UserAction.AddIngredients)
             {
                 _cookbookUI.SelectedIngredient();
                 _ui.WriteMessage("\nChoose one of the ingredient by number (only input the number) : ");
                 string inputPlayer = _ui.GetUserInput();
                 if (_ui.TryRead(inputPlayer, out int id))
                 {
-                    Ingredient ingredient = _ingredientRepository.GetIngredientsList().Find(a => a.Id == id);
+                    Ingredient ingredient = _ingredientRepository.GetIngredientsList().ToList().Find(a => a.Id == id);
                     AddIngredients(ingredient, inputPlayer);
                 }
             }
@@ -66,7 +71,9 @@ public class CookieCookbook : ICookbook
     }
     public void AddIngredients(Ingredient ingredient, string inputPlayer)
     {
-        if (_ingredient != null && _ui.TryReadInt(inputPlayer) <= _ingredientRepository.GetIngredientsList().Count && inputPlayer != "0")
+        var input = _ui.TryReadInt(inputPlayer);
+        var totalIngredient = _ingredientRepository.GetIngredientsList().ToList().Count;
+        if (_ingredient != null && input <= totalIngredient && inputPlayer != "0")
         {
             _ingredient.Add(ingredient);
             _ui.WriteMessage($"{ingredient.Name} add to recipe");
