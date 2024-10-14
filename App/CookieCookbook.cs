@@ -57,15 +57,16 @@ public class CookieCookbook : ICookbook
                 if (_ui.TryRead(inputPlayer, out int id))
                 {
                     Ingredient ingredient = _ingredientRepository.GetIngredientsList().Find(a => a.Id == id);
-                    AddIngredients(ingredient);
+                    AddIngredients(ingredient, inputPlayer);
                 }
             }
         }
         SavingRecipe(recipe);
         return CookbookErrorCode.NoError;
     }
-    public void AddIngredients(Ingredient ingredient){
-        if (_ingredient != null)
+    public void AddIngredients(Ingredient ingredient, string inputPlayer)
+    {
+        if (_ingredient != null && _ui.TryReadInt(inputPlayer) <= _ingredientRepository.GetIngredientsList().Count && inputPlayer != "0")
         {
             _ingredient.Add(ingredient);
             _ui.WriteMessage($"{ingredient.Name} add to recipe");
