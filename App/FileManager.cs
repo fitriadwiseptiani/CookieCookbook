@@ -56,4 +56,10 @@ public class FileManager : IFileManager, IUserInteraction
     {
         return Console.ReadLine();
     }
+
+    public int TryReadInt(string inputPlayer)
+    {
+        return Int32.Parse(inputPlayer);
+    }
+
 }
