@@ -9,7 +9,7 @@ public class FileManager : IFileManager, IUserInteraction
     public IStringRepoManager ChooseFormat()
     {
         WriteMessage("Choose format to save recipes: 1. JSON 2. TXT");
-        int choice = int.Parse(GetUserInput());
+        int choice = TryReadInt(GetUserInput());
 
         string filePath;
 
