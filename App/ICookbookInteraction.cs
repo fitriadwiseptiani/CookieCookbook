@@ -4,7 +4,7 @@ namespace Cookbook.App;
 
 public interface ICookbookInteraction : IUserInteraction
 {   
-    void ChooseAction(out int action);
+    UserAction ChooseAction();
     void SelectedIngredient();
     void DisplayAvailableIngredient();
     void Finished();

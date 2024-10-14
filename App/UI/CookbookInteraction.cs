@@ -7,14 +7,14 @@ namespace Cookbook.App.UI;
 public class CookbookInteraction : ICookbookInteraction
 {
     private IngredientRepository _ingredientRepository;
-    public CookbookInteraction()
+    public CookbookInteraction(IngredientRepository ingredientRepository)
     {
-        _ingredientRepository = new();
+        _ingredientRepository = ingredientRepository;
     }
-    public void ChooseAction(out int action)
+    public UserAction ChooseAction()
     {
-        action = 0;
         bool validInput = false;
+        UserAction userAction = UserAction.AddIngredients;
         while (!validInput)
         {
             WriteMessage("\nPlease choose one of this following action ");
@@ -22,18 +22,19 @@ public class CookbookInteraction : ICookbookInteraction
             WriteMessage("2. End Session");
             WriteMessage("");
             WriteMessage("Your Input : ");
-            bool status = TryRead(GetUserInput(), out int input);
-            if (status && input >= 1 && input <= 2)
+            string userInput = GetUserInput();
+            try
             {
-                action = input;
-                validInput = true;
+                userAction = TryReadEnum<UserAction>(userInput); 
+                validInput = true; 
             }
-            else
+            catch (ArgumentException)
             {
-                WriteMessage("Please input valid number (1-2)");
+                WriteMessage("Please input a valid number (1-2)");
                 Thread.Sleep(1000);
             }
         }
+        return userAction;
     }
     public void SelectedIngredient()
     {
@@ -64,13 +65,13 @@ public class CookbookInteraction : ICookbookInteraction
             WriteMessage($"An error occurred: {result}");
         }
     }
-    
+
     public string FormatSingleRecipe(List<int> ingredientIds)
     {
         List<string> ingredientDetails = new List<string>();
         foreach (int id in ingredientIds)
         {
-            Ingredient ingredient = _ingredientRepository.GetIngredientsList().Find(a => a.Id == id);
+            Ingredient ingredient = _ingredientRepository.GetIngredientsList().ToList().Find(a => a.Id == id);
             if (ingredient != null)
             {
                 WriteMessage($"{ingredient.Name}. {string.Join(". ", ingredient.InstructionPreparation)}");
@@ -104,7 +105,8 @@ public class CookbookInteraction : ICookbookInteraction
     {
         return Int32.TryParse(inputPlayer, out id);
     }
-    public string GetUserInput(){
+    public string GetUserInput()
+    {
         return Console.ReadLine();
     }
 
@@ -113,4 +115,15 @@ public class CookbookInteraction : ICookbookInteraction
         return Int32.Parse(inputPlayer);
     }
 
+    public T TryReadEnum<T>(string input) where T : struct
+    {
+        if (Enum.TryParse(input, true, out T result))
+        {
+            return result;
+        }
+        else
+        {
+            throw new Exception();
+        }
+    }
 }

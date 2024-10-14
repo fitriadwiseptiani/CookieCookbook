@@ -4,26 +4,15 @@ namespace Cookbook.App.Repository;
 
 public class IngredientRepository : IIngredientRepository
 {
-    public IngredientRepository()
+    private List<Ingredient> _availableIngredients;
+    public IEnumerable<Ingredient> AvailableIngredients => _availableIngredients;
+    public IngredientRepository(List<Ingredient> availableIngredients)
     {
+        _availableIngredients = availableIngredients;
     }
-    public List<Ingredient> GetAvailableIngredients()
+    public IEnumerable<Ingredient> GetIngredientsList()
     {
-        var _ingredient = new List<Ingredient>{
-            new WheatFlour(),
-            new CoconutFlour(),
-            new Butter(),
-            new Chocolate(),
-            new Sugar(),
-            new Cardamon(),
-            new Cinnamon(),
-            new CocoaPowder()
-        };
-        return _ingredient;
-    }
-    public List<Ingredient> GetIngredientsList()
-    {
-        return GetAvailableIngredients();
+        return AvailableIngredients;
     }
     public string GetSelectedIngredients(Recipe recipe)
     {

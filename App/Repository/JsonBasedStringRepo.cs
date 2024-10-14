@@ -3,29 +3,30 @@ using Cookbook.App.UI;
 
 namespace Cookbook.App.Repository;
 
-public class JsonBasedStringRepo : IStringRepoManager
+public class JsonBasedStringRepo : BaseStringRepoManager
 {
-    private ICookbookInteraction _cookbookUI;
-    private IFileManager _fileManager;
-    private readonly string filePath = "./File/recipes.json";
-    public JsonBasedStringRepo()
+    public JsonBasedStringRepo(string filePath) : base(filePath)
     {
-        _fileManager = new FileManager();
-        _cookbookUI = new CookbookInteraction();
     }
-    public void SaveRecipes(Recipe recipe, string recipeLine)
+    public override void SaveRecipes(Recipe recipe, string recipeLine)
     {
-        List<string> recipes = _fileManager.LoadFileJson(filePath);
+        List<string> recipes = LoadFile();
         recipes.Add(recipeLine);
 
         string serializedJson = JsonSerializer.Serialize(recipes, new JsonSerializerOptions { WriteIndented = true });
-        File.WriteAllText(filePath, serializedJson);
+        File.WriteAllText(_filePath, serializedJson);
     }
-
-    public List<string> ReadRecipe()
+    public override List<string> ReadRecipe()
     {
-        List<string> recipe = _fileManager.LoadFileJson(filePath);
-        _cookbookUI.DisplayRecipe(recipe);
+        List<string> recipe = LoadFile();
         return recipe;
+    }
+    public override List<string> LoadFile()
+    {
+        if(ExistingFile() == false){
+            return new List<string>();
+        }
+        string json = File.ReadAllText(_filePath);
+        return JsonSerializer.Deserialize<List<string>>(json) ?? new List<string>();
     }
 }

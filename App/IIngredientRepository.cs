@@ -4,7 +4,6 @@ namespace Cookbook.App;
 
 public interface IIngredientRepository
 {
-    List<Ingredient> GetAvailableIngredients();
-    List<Ingredient> GetIngredientsList();
+    IEnumerable<Ingredient> GetIngredientsList();
     string GetSelectedIngredients(Recipe recipe);
 }
