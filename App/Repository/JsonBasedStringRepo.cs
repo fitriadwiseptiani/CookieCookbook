@@ -16,11 +16,6 @@ public class JsonBasedStringRepo : BaseStringRepoManager
         string serializedJson = JsonSerializer.Serialize(recipes, new JsonSerializerOptions { WriteIndented = true });
         File.WriteAllText(_filePath, serializedJson);
     }
-    public override List<string> ReadRecipe()
-    {
-        List<string> recipe = LoadFile();
-        return recipe;
-    }
     public override List<string> LoadFile()
     {
         if(ExistingFile() == false){
