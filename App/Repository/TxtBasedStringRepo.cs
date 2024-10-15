@@ -13,11 +13,6 @@ public class TxtBasedStringRepo : BaseStringRepoManager
         recipes.Add(recipeLine);
         File.WriteAllLines(_filePath, recipes);
     }
-    public override List<string> ReadRecipe()
-    {
-        List<string> recipe = LoadFile();
-        return recipe;
-    }
     public override List<string> LoadFile(){
         if(ExistingFile() == false){
             return new List<string>();

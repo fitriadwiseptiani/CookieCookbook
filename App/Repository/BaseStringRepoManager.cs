@@ -1,7 +1,7 @@
 
 namespace Cookbook.App.Repository;
 
-public class BaseStringRepoManager : IStringRepoManager
+public abstract class BaseStringRepoManager : IStringRepoManager
 {
     private IUserInteraction _ui = new ConsoleUserInteraction();
     public string _filePath;
@@ -9,18 +9,8 @@ public class BaseStringRepoManager : IStringRepoManager
     {
         _filePath = filePath;
     }
-    public virtual void SaveRecipes(Recipe recipe, string recipeLine)
-    {
-        new List<string>();
-    }
-    public virtual List<string> ReadRecipe()
-    {
-        return new List<string>();
-    }
-    public virtual List<string> LoadFile()
-    {
-        return File.ReadAllLines(_filePath).ToList();
-    }
+    public abstract void SaveRecipes(Recipe recipe, string recipeLine);
+    public abstract List<string> LoadFile();
     protected bool ExistingFile()
     {
         if (!File.Exists(_filePath))
@@ -29,6 +19,11 @@ public class BaseStringRepoManager : IStringRepoManager
             return false;
         }
         return true;
+    }
+    public List<string> ReadRecipe()
+    {
+        List<string> recipe = LoadFile();
+        return recipe;
     }
 
 }
