@@ -7,10 +7,8 @@ public class TxtBasedStringRepo : BaseStringRepoManager
     public TxtBasedStringRepo(string filePath) : base(filePath)
     {
     }
-    public override void SaveRecipes(Recipe recipe, string recipeLine)
+    public override void SaveRecipes(List<string> recipes, string recipeLine)
     {
-        List<string> recipes = LoadFile();
-        recipes.Add(recipeLine);
         File.WriteAllLines(_filePath, recipes);
     }
     public override List<string> LoadFile(){

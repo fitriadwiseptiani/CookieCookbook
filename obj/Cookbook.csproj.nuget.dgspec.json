@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "c:\\Project\\tambahan\\Cookbook\\Cookbook.csproj": {}
+    "C:\\Project\\tambahan\\Cookbook\\Cookbook.csproj": {}
   },
   "projects": {
-    "c:\\Project\\tambahan\\Cookbook\\Cookbook.csproj": {
+    "C:\\Project\\tambahan\\Cookbook\\Cookbook.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\Project\\tambahan\\Cookbook\\Cookbook.csproj",
+        "projectUniqueName": "C:\\Project\\tambahan\\Cookbook\\Cookbook.csproj",
         "projectName": "Cookbook",
-        "projectPath": "c:\\Project\\tambahan\\Cookbook\\Cookbook.csproj",
+        "projectPath": "C:\\Project\\tambahan\\Cookbook\\Cookbook.csproj",
         "packagesPath": "C:\\Users\\SE-82\\.nuget\\packages\\",
-        "outputPath": "c:\\Project\\tambahan\\Cookbook\\obj\\",
+        "outputPath": "C:\\Project\\tambahan\\Cookbook\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\SE-82\\AppData\\Roaming\\NuGet\\NuGet.Config"

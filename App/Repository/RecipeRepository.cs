@@ -21,5 +21,12 @@ public class RecipeRepository : IRecipeRepository
     {
         return _stringRepoManager.ReadRecipe();
     }
+    public List<string> LoadFile(){
+        return _stringRepoManager.LoadFile();
+    }
+    public List<string> AddRecipe(List<string> recipes, string recipeLine)
+    {
+        return recipes.Add(recipeLine);
+    }
 }
 

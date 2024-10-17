@@ -22,6 +22,8 @@ public class CookieCookbook : ICookbook
     private readonly IRecipeRepository _recipeRepository;
     private readonly IIngredientRepository _ingredientRepository;
 
+    private readonly List<string> recipes;
+
     //Dependency Injection & Inverison
     public CookieCookbook(IRecipeRepository recipeRepository, IIngredientRepository ingredientRepository, IUserInteraction ui, ICookbookInteraction cookbookUI)
     {
@@ -31,6 +33,7 @@ public class CookieCookbook : ICookbook
         _ingredientRepository = ingredientRepository;
         _ui = ui;
         _cookbookUI = cookbookUI;
+        recipes = _recipeRepository.LoadFile();
     }
     public void DisplayRecipe()
     {
@@ -88,6 +91,8 @@ public class CookieCookbook : ICookbook
         if (_ingredient.Count > 0)
         {
             _ingredientRepository.GetSelectedIngredients(recipe);
+            _recipeRepository.LoadFile();
+            _recipeRepository.AddRecipe();
             _recipeRepository.SaveRecipes(recipe);
             _ui.WriteMessage($"____New recipe added_____");
         }

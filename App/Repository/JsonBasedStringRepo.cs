@@ -8,10 +8,10 @@ public class JsonBasedStringRepo : BaseStringRepoManager
     public JsonBasedStringRepo(string filePath) : base(filePath)
     {
     }
-    public override void SaveRecipes(Recipe recipe, string recipeLine)
+    public override void SaveRecipes(List<string> recipes, string recipeLine)
     {
-        List<string> recipes = LoadFile();
-        recipes.Add(recipeLine);
+        // List<string> recipes = LoadFile();
+        // recipes.Add(recipeLine);
 
         string serializedJson = JsonSerializer.Serialize(recipes, new JsonSerializerOptions { WriteIndented = true });
         File.WriteAllText(_filePath, serializedJson);

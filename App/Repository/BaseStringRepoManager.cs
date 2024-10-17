@@ -9,7 +9,7 @@ public abstract class BaseStringRepoManager : IStringRepoManager
     {
         _filePath = filePath;
     }
-    public abstract void SaveRecipes(Recipe recipe, string recipeLine);
+    public abstract void SaveRecipes(List<string> recipes, string recipeLine);
     public abstract List<string> LoadFile();
     protected bool ExistingFile()
     {
